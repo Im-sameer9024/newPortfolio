@@ -22,8 +22,11 @@ export async function POST(req: Request) {
       );
     }
 
+    const secretKey =
+      "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";
+
     // Configure transporter
-    sgMail.setApiKey('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');
+    sgMail.setApiKey(secretKey);
 
     const msg = {
       to: "rskkhan89@gmail.com",
@@ -76,7 +79,7 @@ export async function POST(req: Request) {
 
     // Send email
     // await transporter.sendMail(mailOptions);
-    console.log("mail send")
+    console.log("mail send");
 
     return NextResponse.json(
       { success: true, message: "Message sent successfully" },
