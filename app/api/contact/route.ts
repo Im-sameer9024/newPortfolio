@@ -1,6 +1,6 @@
 // app/api/contact/route.ts
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+// import nodemailer from "nodemailer";
 import sgMail from "@sendgrid/mail";
 
 export async function POST(req: Request) {
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     }
 
     // Configure transporter
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
+    sgMail.setApiKey('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');
 
     const msg = {
       to: "rskkhan89@gmail.com",
