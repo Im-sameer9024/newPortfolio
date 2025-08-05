@@ -6,26 +6,27 @@ import NavbarItem from "./NavbarItem";
 import { motion, AnimatePresence } from "framer-motion";
 import { Briefcase, Code2, Contact, GraduationCap, Home, Laptop2, Menu, Trophy, User, X } from "lucide-react";
 
+// Updated navItems with hash links
 const navItems = [
-  { icon: <Home size={24} className="lg:w-6 lg:h-6" />, href: "/", text: "Home" },
-  { icon: <User size={24} className="lg:w-6 lg:h-6" />, href: "/about", text: "About Me" },
-  { icon: <Laptop2 size={24} className="lg:w-6 lg:h-6" />, href: "/", text: "Skills" },
-  { icon: <Briefcase size={24} className="lg:w-6 lg:h-6" />, href: "/", text: "Work Experience" },
-  { icon: <GraduationCap size={24} className="lg:w-6 lg:h-6" />, href: "/", text: "Education" },
-  { icon: <Code2 size={24} className="lg:w-6 lg:h-6" />, href: "/", text: "Projects" },
-  { icon: <Trophy size={24} className="lg:w-6 lg:h-6" />, href: "/", text: "Achievements & Certifications" },
-  { icon: <Contact size={24} className="lg:w-6 lg:h-6" />, href: "/", text: "Contact Me" }
+  { icon: <Home size={24} className="lg:w-6 lg:h-6" />, href: "#home", text: "Home" },
+  { icon: <User size={24} className="lg:w-6 lg:h-6" />, href: "#about", text: "About Me" },
+  { icon: <Laptop2 size={24} className="lg:w-6 lg:h-6" />, href: "#skills", text: "Skills" },
+  { icon: <Briefcase size={24} className="lg:w-6 lg:h-6" />, href: "#experience", text: "Work Experience" },
+  { icon: <GraduationCap size={24} className="lg:w-6 lg:h-6" />, href: "#education", text: "Education" },
+  { icon: <Code2 size={24} className="lg:w-6 lg:h-6" />, href: "#projects", text: "Projects" },
+  { icon: <Trophy size={24} className="lg:w-6 lg:h-6" />, href: "#achievements", text: "Achievements & Certifications" },
+  { icon: <Contact size={24} className="lg:w-6 lg:h-6" />, href: "#contact", text: "Contact Me" }
 ];
 
 const mobileNavItems = [
-  { icon: <Home size={20} />, href: "/", text: "Home" },
-  { icon: <User size={20} />, href: "/about", text: "About Me" },
-  { icon: <Laptop2 size={20} />, href: "/skills", text: "Skills" },
-  { icon: <Briefcase size={20} />, href: "/experience", text: "Work Experience" },
-  { icon: <GraduationCap size={20} />, href: "/education", text: "Education" },
-  { icon: <Code2 size={20} />, href: "/projects", text: "Projects" },
-  { icon: <Trophy size={20} />, href: "/achievements", text: "Achievements & Certifications" },
-  { icon: <Contact size={20} />, href: "/contact", text: "Contact Me" }
+  { icon: <Home size={20} />, href: "#home", text: "Home" },
+  { icon: <User size={20} />, href: "#about", text: "About Me" },
+  { icon: <Laptop2 size={20} />, href: "#skills", text: "Skills" },
+  { icon: <Briefcase size={20} />, href: "#experience", text: "Work Experience" },
+  { icon: <GraduationCap size={20} />, href: "#education", text: "Education" },
+  { icon: <Code2 size={20} />, href: "#projects", text: "Projects" },
+  { icon: <Trophy size={20} />, href: "#achievements", text: "Achievements & Certifications" },
+  { icon: <Contact size={20} />, href: "#contact", text: "Contact Me" }
 ];
 
 const Navbar = () => {
@@ -33,7 +34,27 @@ const Navbar = () => {
   const [showSidebar, setShowSidebar] = useState(false);
 
   const toggleSidebar = useCallback(() => setShowSidebar(prev => !prev), []);
-  const handleMenuItemClick = useCallback(() => setShowSidebar(false), []);
+  
+  // Updated handleMenuItemClick to handle smooth scrolling
+  const handleMenuItemClick = useCallback((e: React.MouseEvent, href: string) => {
+    e.preventDefault();
+    setShowSidebar(false);
+    
+    const targetId = href.replace('#', '');
+    const element = document.getElementById(targetId);
+    
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+      
+      // Update URL without page reload
+      if (href) {
+        window.history.pushState({}, '', href);
+      }
+    }
+  }, []);
 
   // Prevent scrolling when sidebar is open
   useEffect(() => {
@@ -60,10 +81,13 @@ const Navbar = () => {
 
   return (
     <div className="w-11/12 mx-auto flex justify-between items-center py-3 px-2 md:px-0">
-      {/* Logo */}
-      <div className="font-righteous text-xl md:text-2xl">
+      {/* Logo with home link */}
+      <a href="#home" className="font-righteous text-xl md:text-2xl" onClick={(e) => {
+        e.preventDefault();
+        document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' });
+      }}>
         <h1>MS</h1>
-      </div>
+      </a>
 
       {/* Desktop Navigation */}
       <motion.ul
@@ -77,7 +101,10 @@ const Navbar = () => {
       >
         {navItems.map((item, index) => (
           <li key={index}>
-            <NavbarItem {...item} />
+            <NavbarItem 
+              {...item} 
+              onClick={(e) => handleMenuItemClick(e, item.href)}
+            />
           </li>
         ))}
       </motion.ul>
@@ -122,7 +149,10 @@ const Navbar = () => {
                 >
                   {mobileNavItems.map((item, index) => (
                     <li key={index}>
-                      <NavbarItem {...item} onClick={handleMenuItemClick} />
+                      <NavbarItem 
+                        {...item} 
+                        onClick={(e) => handleMenuItemClick(e, item.href)}
+                      />
                     </li>
                   ))}
                 </motion.ul>

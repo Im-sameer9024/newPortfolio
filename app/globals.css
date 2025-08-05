@@ -125,6 +125,17 @@
   }
 }
 
+
+html {
+  scroll-behavior: smooth !important ;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body{
   padding: 0;
   margin: 0;
@@ -133,6 +144,7 @@ body{
   max-width: 1440px;
   height: auto;
   margin: auto;
+  scroll-behavior: smooth !important;
 }
 
 

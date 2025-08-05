@@ -12,15 +12,37 @@ import Social from "../Social/Social";
 const HomePage = () => {
   return (
     <main className=" w-full h-auto">
-      <Header />
-      <About />
-      <Skills/>
-      <Experience/>
-      <Education/>
-      <Project/>
-      <Achievements/>
-      <Contact/>
-      <Social/>
+      <section id="home">
+        <Header />
+      </section>
+
+      <section id="about">
+        <About />
+      </section>
+
+      <section id="skills">
+        <Skills />
+      </section>
+
+      <section id="experience">
+        <Experience />
+      </section>
+
+      <section id="education">
+        <Education />
+      </section>
+
+      <section id="projects">
+        <Project />
+      </section>
+
+      <section id="achievements">
+        <Achievements />
+      </section>
+      <section id="contact">
+        <Contact />
+      </section>
+      <Social />
     </main>
   );
 };
