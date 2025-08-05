@@ -1,6 +1,4 @@
-// app/api/contact/route.ts
 import { NextResponse } from "next/server";
-// import nodemailer from "nodemailer";
 import sgMail from "@sendgrid/mail";
 
 export async function POST(req: Request) {
