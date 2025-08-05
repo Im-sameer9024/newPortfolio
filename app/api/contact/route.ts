@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import sgMail from "@sendgrid/mail";
+import nodemailer from "nodemailer";
 
 export async function POST(req: Request) {
   try {
@@ -22,62 +22,37 @@ export async function POST(req: Request) {
       );
     }
 
-    
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS,
+      },
+    });
 
-    // Configure transporter
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY as string);
+    // Verify connection configuration
+    await transporter.verify();
 
-    const msg = {
-      to: "rskkhan89@gmail.com",
-      from: "rskkhan89@gmail.com",
+    // Prepare email
+    const mailOptions = {
+      from: `"${name}" <${process.env.MAIL_USER}>`,
+      replyTo: email,
+      to: process.env.MAIL_RECIPIENT, // Send to yourself
       subject: `New message from ${name} (${email})`,
       text: message,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-           <h2 style="color: #333;">New Contact Form Submission</h2>
-           <p><strong>Name:</strong> ${name}</p>
-           <p><strong>Email:</strong> ${email}</p>
-           <p><strong>Message:</strong></p>
-           <p style="white-space: pre-line; background: #f5f5f5; padding: 10px; border-radius: 5px;">${message}</p>
-         </div>
-       `,
+          <h2 style="color: #333;">New Contact Form Submission</h2>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Message:</strong></p>
+          <p style="white-space: pre-line; background: #f5f5f5; padding: 10px; border-radius: 5px;">${message}</p>
+        </div>
+      `,
     };
 
-    await sgMail.send(msg);
-    // const transporter = nodemailer.createTransport({
-    //   host: process.env.MAIL_HOST,
-    //   service: "gmail",
-    //   port: Number(process.env.MAIL_PORT) || 465, // 587 for TLS, 465 for SSL
-    //   secure: true, // true for 465, false for other ports
-    //   auth: {
-    //     user: process.env.MAIL_USER,
-    //     pass: process.env.MAIL_PASS,
-    //   },
-    // });
-
-    // Verify connection configuration
-    // await transporter.verify();
-
-    // Prepare email
-    // const mailOptions = {
-    //   from: `"${name}" <${process.env.MAIL_USER}>`,
-    //   replyTo: email,
-    //   to: process.env.MAIL_RECIPIENT, // Send to yourself
-    //   subject: `New message from ${name} (${email})`,
-    //   text: message,
-    //   html: `
-    //     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-    //       <h2 style="color: #333;">New Contact Form Submission</h2>
-    //       <p><strong>Name:</strong> ${name}</p>
-    //       <p><strong>Email:</strong> ${email}</p>
-    //       <p><strong>Message:</strong></p>
-    //       <p style="white-space: pre-line; background: #f5f5f5; padding: 10px; border-radius: 5px;">${message}</p>
-    //     </div>
-    //   `,
-    // };
-
     // Send email
-    // await transporter.sendMail(mailOptions);
+    await transporter.sendMail(mailOptions);
     console.log("mail send");
 
     return NextResponse.json(
