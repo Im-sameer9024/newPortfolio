@@ -4,6 +4,10 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 
+
+
+
+
 const NavbarItem = ({
   icon,
   text,
@@ -18,13 +22,14 @@ const NavbarItem = ({
   const [isHovered, setIsHovered] = useState(false);
 
   const vibrateAnimation = {
-    x: [0, -2, 2, -5, 2, 0],
-    y: [0, 5, -2, 2, -2, 0], // Shake left and right
+    x: [-2, 2, -2, 2, 0],
+    y: [0, -2, 0, 2, 0],
     transition: {
       duration: 0.5,
-      repeat: Infinity, // Loop the animation while hovering
-      ease: "easeInOut",
-    },
+      repeat: Infinity,
+      ease: "easeInOut" as const,
+      repeatType: "reverse" as const
+    }
   };
 
   return (

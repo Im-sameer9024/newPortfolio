@@ -1,8 +1,13 @@
 import React from "react";
 import Header from "../Header/Header";
 import About from "../About/About";
-import Skills from "../Skills/Skills";
 import Experience from "../Experience/Experience";
+import Skills from "../Skills/Skills";
+import Education from "../Education/Education";
+import Project from "../Projects/Project";
+import Achievements from "../Achievements/Achievements";
+import Contact from "../Contact/Contact";
+import Social from "../Social/Social";
 
 const HomePage = () => {
   return (
@@ -11,6 +16,11 @@ const HomePage = () => {
       <About />
       <Skills/>
       <Experience/>
+      <Education/>
+      <Project/>
+      <Achievements/>
+      <Contact/>
+      <Social/>
     </main>
   );
 };

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import {  Big_Shoulders, Great_Vibes, La_Belle_Aurore, Righteous, } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar/Navbar";
+import { Toaster } from "react-hot-toast";
 
 
 const greatVibes = Great_Vibes({
@@ -45,6 +46,7 @@ export default function RootLayout({
       <body
         className={` ${laBellaAuroea.variable} ${righteous.variable} ${greatVibes.variable} ${bigShoulders.variable}  antialiased`}
       >
+        <Toaster/>
         <Navbar/>
         {children}
       </body>
