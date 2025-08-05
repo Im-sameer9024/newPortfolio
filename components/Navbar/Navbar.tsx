@@ -84,7 +84,7 @@ const Navbar = () => {
 
       {/* Dark Mode Toggle (Placeholder) */}
       <div className="hidden md:block">
-        <Button>Dark</Button>
+        {/* <Button>Dark</Button> */}
       </div>
 
       {/* Mobile Menu */}
