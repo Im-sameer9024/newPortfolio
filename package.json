@@ -13,6 +13,7 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@react-three/drei": "^10.6.1",
     "@react-three/fiber": "^9.3.0",
+    "@sendgrid/mail": "^8.1.5",
     "@types/nodemailer": "^6.4.17",
     "axios": "^1.11.0",
     "class-variance-authority": "^0.7.1",
